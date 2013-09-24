@@ -178,7 +178,7 @@ d3.slider = function module() {
       }
 
       function onClickVertical() {
-        moveHandle(sliderLength - d3.event.offsetY || d3.event.layerY);
+        moveHandle(sliderLength - d3.event.offsetY || sliderLength - d3.event.layerY);
       }
 
       function onDragHorizontal() {
