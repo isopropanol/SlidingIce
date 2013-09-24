@@ -447,21 +447,25 @@ var SuperGif = function ( options ) {
 		toolbar.innerHTML = text; // innerText? Escaping? Whatever.
 		toolbar.style.visibility = 'visible';
 	};
-
 	var doShowProgress = function (pos, length, draw) {
 		if (draw) {
-			var height = 25;
-			var top = (canvas.height - height);
-			var mid = (pos / length) * canvas.width;
+			var height = canvas.height;
+			var top = (pos / length) * height;
+			var mid = canvas.width;
+			var loadheight = height - top;
+			$('#slider').hide();
+			$('#tempcover img').show();
+			$('#tempload').show();
+			$('#tempload').css({'height':loadheight,'top':top,'background-position':0+'px'+' -'+top+'px'});
 
 			// XXX Figure out alpha fillRect.
 			//ctx.fillStyle = 'salmon';
-			ctx.fillStyle = 'rgba(255,255,255,0.4)';
-			ctx.fillRect(mid, top, canvas.width - mid, height);
+			ctx.fillStyle = 'rgba(0,173,227,1)';
+			ctx.fillRect(0, top, canvas.width, height);
 
 			//ctx.fillStyle = 'teal';
-			ctx.fillStyle = 'rgba(255,0,22,.8)';
-			ctx.fillRect(0, top, (pos / length) * canvas.width, height);
+			ctx.fillStyle = 'rgba(255,0,22,0)';
+			ctx.fillRect(0, height - top, canvas.width, height);
 		}
 	};
 
@@ -742,6 +746,9 @@ var SuperGif = function ( options ) {
 			canvas.height = hdr.height;
 			player.init();
 			loading = false;
+			$('#tempcover').animate({'opacity':0},700,function(){
+				$('#slider').show();
+			});
 			register_canvas_handers();
 			if (load_callback)
 			{
