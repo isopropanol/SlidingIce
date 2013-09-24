@@ -673,6 +673,7 @@ var SuperGif = function ( options ) {
 				maxDistance = Math.floor(canvas.width / (player.length() * 2)),
 				// swipe movement of 50 pixels triggers the swipe
 				startX = 0,
+				startY = 0,
 				startTime = 0;
 
 			var cantouch = "ontouchend" in document;
@@ -688,18 +689,26 @@ var SuperGif = function ( options ) {
 				var pos = (e.touches && e.touches.length > 0) ? e.touches[0] : e;
 
 				var x = (pos.layerX > 0) ? pos.layerX : canvas.width / 2;
-				var progress = x / canvas.width;
+				var y = (pos.layerY >0) ? pos.layerY : canvas.height / 2;
+				var canwidth = canvas.width;
+				var canheight = canvas.height;
+
+				var progress = Math.sqrt(Math.pow(((canwidth - x) / canvas.width),2) + Math.pow(((canheight - y) / canvas.height),2));
+
+				console.log(progress);
 
 				player.move_to( Math.floor(progress * (player.length() - 1)) );
-				
+				console.log('and were off');
 				startTime = e.timeStamp;
 				startX = pos.pageX;
+				startY = pos.pageY;
 			};
 			canvas.addEventListener((cantouch) ? 'touchstart' : 'mousedown', startup );
 
 			var shutdown = function (e) {
 				startTime = 0;
 				startX = 0;
+				startY = 0;
 				if (options.auto_play) player.play();
 			};
 			canvas.addEventListener((cantouch) ? 'touchend' : 'mouseup', shutdown);
@@ -709,18 +718,23 @@ var SuperGif = function ( options ) {
 				var pos = (e.touches && e.touches.length > 0) ? e.touches[0] : e;
 
 				var currentX = pos.pageX;
-				currentDistance = (startX === 0) ? 0 : Math.abs(currentX - startX);
+				var currentY = pos.pageY;
+				currentXDistance = (startX === 0) ? 0 : Math.abs(currentX - startX);
+				currentYDistance = (startY === 0) ? 0 : Math.abs(currentY - startY);
+				XYsum = (startX ===0 || startY ===0) ? 0 : currentX - startX + currentY - startY;
+				currentDistance = Math.sqrt(Math.pow(currentYDistance,2) + Math.pow((currentXDistance),2));
 				// allow if movement < 1 sec
 				currentTime = e.timeStamp;
 				if (startTime !== 0 && currentDistance > maxDistance) {
-					if (currentX < startX && player.current_frame() > 0) {
-						player.move_relative(-1);
-					}
-					if (currentX > startX && player.current_frame() < player.length() - 1) {
+					if ((XYsum<0) && player.current_frame() > 0) {
 						player.move_relative(1);
+					}
+					if (XYsum > 0 && player.current_frame() < player.length() - 1) {
+						player.move_relative(-1);
 					}
 					startTime = e.timeStamp;
 					startX = pos.pageX;
+					startY = pos.pageY;
 				}
 
 			};
@@ -747,7 +761,8 @@ var SuperGif = function ( options ) {
 			player.init();
 			loading = false;
 			$('#tempcover').animate({'opacity':0},700,function(){
-				$('#slider').show();
+				$('#tempcover').hide();
+				//$('#slider').show();
 			});
 			register_canvas_handers();
 			if (load_callback)
