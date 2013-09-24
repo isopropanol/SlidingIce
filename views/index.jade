@@ -1,0 +1,24 @@
+extend ./layout
+block content
+	.section.blue(style="height:100%;position:relative;background:rgb(0,173,227);")
+		.container(style="padding:4rem;")
+
+			.main-content
+				.row
+					#slider3text
+					.span7(style="margin-left:auto;margin-right:auto;width:660px;position:relative;")
+						.span1#slider(style="height:360px;display:inline-block;position:absolute;width:640px;")
+						.span4(style="display:inline-block;position:absolute;left:0;top:0;")
+							img#example1(src="images/melting_cover.png", rel:animated_src="images/melting.gif", rel:auto_play="0")
+		
+	script
+		
+			var sup1 = new SuperGif({ gif: document.getElementById('example1') } );
+				sup1.load();
+			d3.select('#slider').call(d3.slider().value(0).orientation("vertical").on("slide", function(evt, value) {
+				d3.select('#slider3text').text(value);
+				var toval = Math.floor(value*3.3);
+				sup1.move_to(toval);
+
+			}));
+			
