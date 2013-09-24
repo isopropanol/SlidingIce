@@ -6,3 +6,15 @@
   width: 640px;
   height: 360px;
 }
+h1 {
+  font-size: 65px;
+  color: #fff;
+}
+h2 {
+  color: #fff;
+  letter-spacing: 6.5;
+}
+.d3-slider-handle,
+.d3-slider {
+  cursor: pointer;
+}
