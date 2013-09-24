@@ -1,20 +1,20 @@
 extend ./layout
 block content
-	.section.forScroll
 	.section.forScroll#section2
 	.section.forScroll#section3
 	.section.forScroll#section4
+	.section.forScroll.last
 	.section.blue#gifZone(style="height:100%;width:100%;position:fixed;top:0;background:rgb(0,173,227);")
 		.container(style="padding:4rem;")
 
 			.main-content
 				.row
 					.span7(style="margin-left:auto;margin-right:auto;width:660px;position:relative;")
-						h1 Drag the Glacier Back
+						h1 Drag Back the Glacier
 						h2 Watch Climate Change in Action
 				.row
 					
-					.span7(style="margin-left:auto;margin-right:auto;width:660px;position:relative;")
+					.span7(style="margin-left:auto;margin-right:auto;width:660px;min-height:360px;position:relative;")
 						//.span1#slider(style="height:360px;display:inline-block;position:absolute;width:640px;z-index:7;")
 						.span4#tempcover(style="display:inline-block;position:absolute;left:0;top:0;z-index:5;")
 							img(src="images/iceberg_cover.png", style="background:rgb(0,173,227);display:none;")
@@ -26,6 +26,9 @@ block content
 							img(src="images/iceberg_cover.png", style="background:rgb(0,173,227);display:none;")
 							.span4(style="display:inline-block;position:absolute;left:0;top:0;background:url('images/iceberg_outline2.png') 640px 360px rgb(0,173,227);z-index:6;width:640px;height:360px;")
 							a(href="http://i.minus.com/i7u9cV0N5fy5w.gif")
+		.span12
+			.span2#scrollArrow1(style="margin-left:auto;margin-right:auto;width:50px;opacity:0;")
+				img(src="images/downArrow.png")
 
 		
 	script
@@ -37,20 +40,19 @@ block content
 				var toval = Math.floor(value*1.1);
 				sup1.move_to(toval);
 
+
 			}));
 			$(function(){
 				for(var i = 0; i<35;i++){
 				$('#section2').append('<div class="scrollpoint" data-frame='+i+'></div>');
 				}
 				for(var i = 35; i<70;i++){
-				$('#section2').append('<div class="scrollpoint" data-frame='+i+'></div>');
+				$('#section3').append('<div class="scrollpoint" data-frame='+i+'></div>');
 				}
 				for(var i = 70; i<110;i++){
 				$('#section4').append('<div class="scrollpoint" data-frame='+i+'></div>');
 				}
-				$('.scrollpoint').waypoint(function(direction){
-					sup1.move_to($(this).attr('data-frame'));
-					})
+				
 			});
 
 			

@@ -696,7 +696,7 @@ var SuperGif = function ( options ) {
 				startX = pos.pageX;
 			};
 			canvas.addEventListener((cantouch) ? 'touchstart' : 'mousedown', startup );
-			
+
 			var shutdown = function (e) {
 				startTime = 0;
 				startX = 0;
@@ -746,10 +746,16 @@ var SuperGif = function ( options ) {
 			canvas.height = hdr.height;
 			player.init();
 			loading = false;
+			// This is Where Extreme Ice Survey scrolling is implemented
 			$('#tempcover').animate({'opacity':0},700,function(){
 				$('#tempcover').hide();
-				//$('#slider').show();
+				$('.forScroll').show();
+				$('.scrollpoint').waypoint(function(direction){
+					sup1.move_to($(this).attr('data-frame'));
+					
+					})
 			});
+			$('#scrollArrow1').animate({'opacity':1},700);
 			register_canvas_handers();
 			if (load_callback)
 			{

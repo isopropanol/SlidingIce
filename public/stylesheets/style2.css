@@ -20,7 +20,12 @@ h2 {
 }
 .forScroll {
   min-height: 100%;
+  display: none;
 }
 .forScroll .scrollpoint {
   height: 3%;
+  border: 1px solid #000;
+}
+.forScroll.last {
+  height: 100%;
 }
