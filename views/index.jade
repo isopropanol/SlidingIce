@@ -1,6 +1,10 @@
 extend ./layout
 block content
-	.section.blue(style="height:100%;position:relative;background:rgb(0,173,227);")
+	.section.forScroll
+	.section.forScroll#section2
+	.section.forScroll#section3
+	.section.forScroll#section4
+	.section.blue#gifZone(style="height:100%;width:100%;position:fixed;top:0;background:rgb(0,173,227);")
 		.container(style="padding:4rem;")
 
 			.main-content
@@ -17,14 +21,15 @@ block content
 							.span4#tempload(style="display:inline-block;position:absolute;left:0;top:0;background:no-repeat url('images/iceberg_outline2.png') 640px 360px rgb(0,173,227);")
 						
 						.span4(style="display:inline-block;position:absolute;left:0;top:0;")
-							img#example1(src="images/iceberg_cover.png", rel:animated_src="images/melting2.gif", rel:auto_play="0", rel:rubbable="1")
+							img#example1(src="images/iceberg_cover.png", rel:animated_src="images/melting2.gif", rel:auto_play="0", )
 				//.span4(style="display:inline-block;position:absolute;left:0;top:0;z-index:5;")
 							img(src="images/iceberg_cover.png", style="background:rgb(0,173,227);display:none;")
 							.span4(style="display:inline-block;position:absolute;left:0;top:0;background:url('images/iceberg_outline2.png') 640px 360px rgb(0,173,227);z-index:6;width:640px;height:360px;")
 							a(href="http://i.minus.com/i7u9cV0N5fy5w.gif")
+
 		
 	script
-		
+
 			var sup1 = new SuperGif({ gif: document.getElementById('example1') } );
 				sup1.load();
 			d3.select('#slider').call(d3.slider().value(0).orientation("horizontal").on("slide", function(evt, value) {
@@ -33,5 +38,19 @@ block content
 				sup1.move_to(toval);
 
 			}));
+			$(function(){
+				for(var i = 0; i<35;i++){
+				$('#section2').append('<div class="scrollpoint" data-frame='+i+'></div>');
+				}
+				for(var i = 35; i<70;i++){
+				$('#section2').append('<div class="scrollpoint" data-frame='+i+'></div>');
+				}
+				for(var i = 70; i<110;i++){
+				$('#section4').append('<div class="scrollpoint" data-frame='+i+'></div>');
+				}
+				$('.scrollpoint').waypoint(function(direction){
+					sup1.move_to($(this).attr('data-frame'));
+					})
+			});
 
 			

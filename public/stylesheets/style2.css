@@ -18,3 +18,9 @@ h2 {
 .d3-slider {
   cursor: pointer;
 }
+.forScroll {
+  min-height: 100%;
+}
+.forScroll .scrollpoint {
+  height: 3%;
+}
